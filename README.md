@@ -1,4 +1,4 @@
-# readme-guestbook
+# Guestbook
 Sign my GitHub profile guestbook
 
 ## How to sign
