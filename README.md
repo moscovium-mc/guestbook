@@ -2,7 +2,7 @@
 
 ![Signatures](https://img.shields.io/github/issues-closed/moscovium-mc/guestbook?label=signatures&color=brightgreen)
 
-Leave your mark. Drop a message, share your thoughts, or just say hi.
+Leave your mark. Drop a message, share your thoughts, or say hi.
 
 ## Sign the Guestbook
 
