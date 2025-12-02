@@ -1,7 +1,7 @@
 # Guestbook
 ![Signatures](https://img.shields.io/github/issues-closed/moscovium-mc/guestbook?label=signatures&color=brightgreen)
 
-Sign my guestbook and leave a message!
+Leave your mark. Drop a message, share your thoughts, or just say hi.
 
 ## How to Sign
 [Click here](https://github.com/moscovium-mc/guestbook/issues/new?title=Guestbook%20Entry) - open a new issue with your message.
@@ -10,4 +10,4 @@ Sign my guestbook and leave a message!
 [Browse all entries →](https://github.com/moscovium-mc/guestbook/issues?q=is%3Aissue+is%3Aclosed)
 
 ---
-*Please feel free to be creative, kind, and respectful.*
+*Keep it creative, keep it respectful.*
