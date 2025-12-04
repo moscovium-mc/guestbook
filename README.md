@@ -19,10 +19,10 @@ Sign below.
 ---
 
 > [!NOTE]
-> **Guidelines:** Be creative, share your thoughts, say hello. Keep it respectful—no spam or malicious content.
+> **Guidelines:** Be creative, say what's up, rep your crew. Keep it respectful—no spam or malicious content.
 
 > [!TIP]
-> This guestbook automatically updates when an issue is closed.
+> **Fully automated:** Issue opened → bot responds → auto-closes → README updates. Your signature appears within seconds.
 
 ---
 
