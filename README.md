@@ -4,6 +4,7 @@
   
 ![Signatures](https://img.shields.io/github/issues-closed/moscovium-mc/guestbook?label=signatures&color=brightgreen)
 ![Status](https://img.shields.io/badge/status-open-success)
+![Last Updated](https://img.shields.io/github/last-commit/moscovium-mc/guestbook?label=last%20updated)
 
 A guestbook for the infosec community - researchers, contributors, and friends who make this space better. 
 
