@@ -18,10 +18,14 @@ Leave your mark. Drop a message, share your thoughts, or say hi.
 > [!NOTE]
 > **Guidelines:** Be creative, share your thoughts, say hello. Keep it respectful—no spam or malicious content.
 
+> [!TIP]
+> This guestbook automatically updates when you close an issue. Your signature will appear within minutes!
+
 ---
 
 ## Recent Signatures
 
+<!-- GUESTBOOK:START -->
 <table>
 <tr>
 <td width="80px" align="center"><strong>#1</strong></td>
@@ -94,6 +98,7 @@ Leave your mark. Drop a message, share your thoughts, or say hi.
 </td>
 </tr>
 </table>
+<!-- GUESTBOOK:END -->
 
 ---
 
