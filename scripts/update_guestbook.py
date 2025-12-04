@@ -49,12 +49,10 @@ def format_body(body):
 
 def generate_guestbook_table(issues):
     """Generate the guestbook table HTML"""
-    # Show only the 6 most recent
-    recent_issues = issues[:6]
-    
+    # Show ALL entries (not just 6)
     table_rows = []
     
-    for idx, issue in enumerate(recent_issues, 1):
+    for idx, issue in enumerate(issues, 1):
         username = issue['user']['login']
         created_at = format_date(issue['created_at'])
         body = format_body(issue['body'])
