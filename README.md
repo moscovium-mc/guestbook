@@ -28,6 +28,20 @@ Leave your mark. Drop a message, share your thoughts, or say hi.
 <!-- GUESTBOOK:START -->
 <table>
 <tr>
+<td width="80px" align="center"><strong>#8</strong></td>
+<td>
+
+**[BashBunnyy](https://github.com/BashBunnyy)** • *Dec 04, 2025*
+
+> "you guys are awesome btw even if you dont like me, lol" -Stax
+> 
+> I am Sysko, sometimes Bunny,, sometimes other things.
+> I think I will just have a carrot, and some celery, ouuuuuu.....
+
+</td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr>
 <td width="80px" align="center"><strong>#7</strong></td>
 <td>
 
