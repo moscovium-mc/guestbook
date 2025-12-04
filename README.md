@@ -115,6 +115,6 @@ Leave your mark. Drop a message, share your thoughts, or say hi.
 
 <div align="center">
 
-<sub>Maintained with care by <a href="https://github.com/moscovium-mc">@moscovium-mc</a></sub>
+<sub>Maintained by <a href="https://github.com/moscovium-mc">@moscovium-mc</a></sub>
 
 </div>
