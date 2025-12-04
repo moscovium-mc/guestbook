@@ -5,7 +5,7 @@
 ![Signatures](https://img.shields.io/github/issues-closed/moscovium-mc/guestbook?label=signatures&color=brightgreen)
 ![Status](https://img.shields.io/badge/status-open-success)
 
-Leave your mark. Drop a message, share your thoughts, or say hi.
+A guestbook for the infosec community - researchers, contributors, and friends who make this space better. Sign below.
 
 <br>
 
