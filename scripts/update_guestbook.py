@@ -49,7 +49,7 @@ def format_body(body):
 
 def generate_guestbook_table(issues):
     """Generate the guestbook table HTML"""
-    # Show ALL entries (not just 6)
+    # Show ALL entries
     table_rows = []
     
     for idx, issue in enumerate(issues, 1):
