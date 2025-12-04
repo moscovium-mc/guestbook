@@ -158,10 +158,3 @@ Sign below.
 
 </div>
 
-<div align="center">
-
-*Thanks for stopping by. - stax*
-
-<sub>Maintained by <a href="https://github.com/moscovium-mc">@moscovium-mc</a></sub>
-
-</div>
