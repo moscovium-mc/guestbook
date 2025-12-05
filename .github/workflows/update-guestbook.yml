@@ -44,6 +44,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
         
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -66,7 +68,7 @@ jobs:
           git add README.md
           
           if ! git diff --quiet || ! git diff --staged --quiet; then
-            git commit -m "Update guestbook entries"
+            git commit -m "Update guestbook entries [skip ci]"
             
             # Retry push up to 3 times if rejected
             for i in 1 2 3; do
