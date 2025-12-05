@@ -37,10 +37,8 @@ Sign below.
 <td>
 **[BashBunnyy](https://github.com/BashBunnyy)** • *Dec 04, 2025*
 
-> "you guys are awesome btw even if you dont like me, lol" -Stax
-> 
-> I am Sysko, sometimes Bunny,, sometimes other things.
-> I think I will just have a carrot, and some celery, ouuuuuu.....
+> Hello from Sysko (sometimes Bunny)!
+> Wishing everyone here an awesome day!
 </td>
 </tr>
 <tr><td colspan="2"><hr></td></tr>
