@@ -24,7 +24,7 @@ Sign below.
 > **Guidelines:** Be creative, say what's up, rep your crew. Keep it respectful—no spam or malicious content.
 
 > [!TIP]
-> **Fully automated:** Issue opened → bot responds → auto-closes → README updates. Your signature appears within seconds.
+> **Fully automated:** Issue opened → bot responds → auto-closes → README updates. 
 
 ---
 
