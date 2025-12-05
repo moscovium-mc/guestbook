@@ -31,6 +31,10 @@ Sign below.
 ## Signatures
 
 <!-- GUESTBOOK:START -->
+**Total Signatures:** 8 • **Latest:** @BashBunnyy on Dec 04, 2025
+
+---
+
 <table>
 <tr>
 <td width="80px" align="center"><strong>#8</strong></td>
