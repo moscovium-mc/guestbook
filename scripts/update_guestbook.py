@@ -12,7 +12,7 @@ HEADERS = {
 }
 
 def fetch_all_closed_issues():
-    """Fetch all closed issues from the repository with pagination"""
+    """Fetch all closed issues with rate limit handling and error handling"""
     all_issues = []
     page = 1
     
@@ -26,9 +26,20 @@ def fetch_all_closed_issues():
             'direction': 'desc'
         }
         
-        response = requests.get(url, headers=HEADERS, params=params)
-        response.raise_for_status()
-        issues = response.json()
+        try:
+            response = requests.get(url, headers=HEADERS, params=params)
+            
+            # Check rate limits
+            remaining = int(response.headers.get('X-RateLimit-Remaining', 0))
+            if remaining < 10:
+                print(f"Warning: Only {remaining} API calls remaining")
+            
+            response.raise_for_status()
+            issues = response.json()
+            
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching page {page}: {e}")
+            break
         
         if not issues:
             break
@@ -49,8 +60,11 @@ def fetch_all_closed_issues():
 
 def format_date(date_str):
     """Format ISO date to 'Dec 1, 2025'"""
-    date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%SZ')
-    return date.strftime('%b %d, %Y')
+    try:
+        date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%SZ')
+        return date.strftime('%b %d, %Y')
+    except ValueError:
+        return date_str
 
 def format_body(body):
     """Format issue body as blockquote"""
@@ -68,21 +82,45 @@ def format_body(body):
     
     return '\n'.join(formatted_lines)
 
+def generate_stats_section(issues):
+    """Generate stats section"""
+    total = len(issues)
+    
+    if not issues:
+        return "**Total Signatures:** 0\n\n---\n\n"
+    
+    latest = issues[0]
+    latest_user = f"@{latest['user']['login']}" if latest.get('user') else "@[deleted]"
+    latest_date = format_date(latest['created_at'])
+    
+    return f'''**Total Signatures:** {total} • **Latest:** {latest_user} on {latest_date}
+
+---
+
+'''
+
 def generate_guestbook_table(issues):
     """Generate the guestbook table HTML"""
     table_rows = []
     
     for issue in issues:
-        username = issue['user']['login']
+        # Handle deleted/suspended accounts
+        if issue.get('user'):
+            username = issue['user']['login']
+            user_url = f"https://github.com/{username}"
+        else:
+            username = '[deleted]'
+            user_url = "#"
+        
         created_at = format_date(issue['created_at'])
-        body = format_body(issue['body'])
+        body = format_body(issue.get('body', ''))
         issue_number = issue['number']
         
         row = f'''<tr>
 <td width="80px" align="center"><strong>#{issue_number}</strong></td>
 <td>
 
-<strong><a href="https://github.com/{username}">@{username}</a></strong> • <em>{created_at}</em>
+<strong><a href="{user_url}">@{username}</a></strong> • <em>{created_at}</em>
 
 {body}
 </td>
@@ -99,8 +137,12 @@ def generate_guestbook_table(issues):
 
 def update_readme(guestbook_content):
     """Update README.md with new guestbook content"""
-    with open('README.md', 'r', encoding='utf-8') as f:
-        content = f.read()
+    try:
+        with open('README.md', 'r', encoding='utf-8') as f:
+            content = f.read()
+    except FileNotFoundError:
+        print("Error: README.md not found")
+        return
     
     pattern = r'<!-- GUESTBOOK:START -->.*?<!-- GUESTBOOK:END -->'
     replacement = f'<!-- GUESTBOOK:START -->\n{guestbook_content}\n<!-- GUESTBOOK:END -->'
@@ -121,9 +163,11 @@ def main():
         return
     
     print(f"Found {len(issues)} total closed issues")
-    print("Generating guestbook table...")
+    print("Generating guestbook content...")
     
-    guestbook_content = generate_guestbook_table(issues)
+    stats_section = generate_stats_section(issues)
+    guestbook_table = generate_guestbook_table(issues)
+    guestbook_content = stats_section + guestbook_table
     
     print("Updating README.md...")
     update_readme(guestbook_content)
