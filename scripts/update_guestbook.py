@@ -81,6 +81,7 @@ def generate_guestbook_table(issues):
         row = f'''<tr>
 <td width="80px" align="center"><strong>#{issue_number}</strong></td>
 <td>
+
 **[{username}](https://github.com/{username})** • *{created_at}*
 
 {body}
