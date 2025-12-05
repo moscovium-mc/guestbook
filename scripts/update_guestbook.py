@@ -58,6 +58,24 @@ def fetch_all_closed_issues():
     
     return all_issues
 
+def filter_spam_issues(issues):
+    """Filter out issues labeled as spam"""
+    filtered = []
+    spam_count = 0
+    
+    for issue in issues:
+        labels = [label['name'].lower() for label in issue.get('labels', [])]
+        
+        if 'spam' in labels:
+            spam_count += 1
+            print(f"Filtering out spam issue #{issue['number']}")
+            continue
+        
+        filtered.append(issue)
+    
+    print(f"Filtered {spam_count} spam issues")
+    return filtered
+
 def format_date(date_str):
     """Format ISO date to 'Dec 1, 2025'"""
     try:
@@ -100,10 +118,10 @@ def generate_stats_section(issues):
 '''
 
 def generate_guestbook_table(issues):
-    """Generate the guestbook table HTML"""
+    """Generate the guestbook table HTML with sequential numbering"""
     table_rows = []
     
-    for issue in issues:
+    for idx, issue in enumerate(issues, start=1):
         # Handle deleted/suspended accounts
         if issue.get('user'):
             username = issue['user']['login']
@@ -117,7 +135,7 @@ def generate_guestbook_table(issues):
         issue_number = issue['number']
         
         row = f'''<tr>
-<td width="80px" align="center"><strong>#{issue_number}</strong></td>
+<td width="80px" align="center"><strong>#{idx}</strong><br><sub>Issue #{issue_number}</sub></td>
 <td>
 
 <strong><a href="{user_url}">@{username}</a></strong> • <em>{created_at}</em>
@@ -163,10 +181,15 @@ def main():
         return
     
     print(f"Found {len(issues)} total closed issues")
-    print("Generating guestbook content...")
     
-    stats_section = generate_stats_section(issues)
-    guestbook_table = generate_guestbook_table(issues)
+    # Filter spam
+    print("Filtering spam issues...")
+    filtered_issues = filter_spam_issues(issues)
+    
+    print(f"Generating guestbook content for {len(filtered_issues)} entries...")
+    
+    stats_section = generate_stats_section(filtered_issues)
+    guestbook_table = generate_guestbook_table(filtered_issues)
     guestbook_content = stats_section + guestbook_table
     
     print("Updating README.md...")
