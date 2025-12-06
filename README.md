@@ -8,7 +8,7 @@
 ![Stars](https://img.shields.io/github/stars/moscovium-mc/guestbook?style=social)
 ![Last Updated](https://img.shields.io/github/last-commit/moscovium-mc/guestbook?label=last%20updated)
 
-A guestbook for the infosec community - researchers, contributors, and friends who make this space better. 
+A guestbook for the community - researchers, contributors, and friends who make this space better. 
 
 Sign below.
 
