@@ -14,7 +14,7 @@ Sign below.
 
 <br>
 
-**[Sign the Guestbook](https://github.com/moscovium-mc/guestbook/issues/new/choose)** • **[View All](https://github.com/moscovium-mc/guestbook/issues?q=is%3Aissue+is%3Aclosed)**
+**[Sign the Guestbook](https://github.com/moscovium-mc/guestbook/issues/new/choose)**
 
 </div>
 
