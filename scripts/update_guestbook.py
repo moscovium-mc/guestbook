@@ -1,107 +1,130 @@
-name: Update Guestbook
+import os
+import re
+import requests
+from datetime import datetime
 
-on:
-  issues:
-    types: [opened, closed, edited, labeled, unlabeled]
-  workflow_dispatch:
+GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
+REPO = os.environ['REPO']
+HEADERS = {
+    'Authorization': f'token {GITHUB_TOKEN}',
+    'Accept': 'application/vnd.github.v3+json'
+}
 
-permissions:
-  contents: write
-  issues: write
+def fetch_all_closed_issues():
+    all_issues = []
+    page = 1
 
-jobs:
-  respond:
-    if: github.event.action == 'opened'
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Thank the visitor
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const responses = [
-              `Thanks for stopping by, @${context.payload.issue.user.login}! <3`,
-              `Appreciate you signing the book, @${context.payload.issue.user.login}!`,
-              `Entry logged, @${context.payload.issue.user.login}. Respect.`,
-              `@${context.payload.issue.user.login} was here. Noted.`,
-              `Welcome to the guestbook, @${context.payload.issue.user.login}!`,
-              `Signature recorded, @${context.payload.issue.user.login}. Much love.`,
-              `@${context.payload.issue.user.login} dropped by. Legend status confirmed.`,
-              `Thanks for the visit, @${context.payload.issue.user.login}! Stay safe out there.`
-            ];
-            
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-            
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: randomResponse
-            });
+    while True:
+        url = f'https://api.github.com/repos/{REPO}/issues'
+        params = {
+            'state': 'closed',
+            'per_page': 100,
+            'page': page,
+            'sort': 'created',
+            'direction': 'desc'
+        }
 
-      - name: Standardize issue title
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const standardTitle = 'Guestbook Entry';
-            if (context.payload.issue.title !== standardTitle) {
-              await github.rest.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                title: standardTitle
-              });
-            }
+        try:
+            response = requests.get(url, headers=HEADERS, params=params)
+            response.raise_for_status()
+            issues = response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching page {page}: {e}")
+            break
 
-      - name: Close the issue
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.issues.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              state: 'closed'
-            });
+        if not issues:
+            break
 
-  update:
-    if: |
-      github.event.action == 'closed' || 
-      github.event.action == 'edited' || 
-      github.event.action == 'labeled' ||
-      github.event.action == 'unlabeled' ||
-      github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-        
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          
-      - name: Install dependencies
-        run: pip install requests
-        
-      - name: Update Guestbook
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-        run: python scripts/update_guestbook.py
-        
-      - name: Commit changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add README.md
-          
-          if ! git diff --quiet || ! git diff --staged --quiet; then
-            git commit -m "Update guestbook entries [skip ci]"
-            for i in 1 2 3; do
-              git pull --rebase origin main && git push && break || sleep 2
-            done
-          fi
+        issues = [i for i in issues if 'pull_request' not in i]
+        all_issues.extend(issues)
+
+        if len(issues) < 100:
+            break
+        page += 1
+
+    return all_issues
+
+def format_date(date_str):
+    try:
+        date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%SZ')
+        return date.strftime('%b %d, %Y')
+    except ValueError:
+        return date_str
+
+def format_body(body):
+    if not body or body.strip() == '':
+        return '> (no message)'
+
+    lines = body.strip().split('\n')
+    return '\n'.join(f'> {line}' if line else '> ' for line in lines)
+
+def generate_stats_section(issues):
+    total = len(issues)
+    if not issues:
+        return "**Total Signatures:** 0\n\n---\n\n"
+
+    latest = issues[0]
+    username = f"@{latest['user']['login']}" if latest.get('user') else "@[deleted]"
+    created_at = format_date(latest['created_at'])
+
+    return f"""**Total Signatures:** {total} • **Latest:** {username} on {created_at}
+
+---
+
+"""
+
+def generate_guestbook_table(issues):
+    rows = []
+
+    for idx, issue in enumerate(issues, 1):
+        username = issue['user']['login'] if issue.get('user') else '[deleted]'
+        user_url = f"https://github.com/{username}" if issue.get('user') else "#"
+        created_at = format_date(issue['created_at'])
+        body = format_body(issue.get('body', ''))
+        issue_number = issue['number']
+
+        row = f"""<tr>
+<td width="80px" align="center"><strong>#{idx}</strong><br><sub>Issue #{issue_number}</sub></td>
+<td>
+<strong><a href="{user_url}">@{username}</a></strong> • <em>{created_at}</em>
+
+{body}
+</td>
+</tr>"""
+
+        rows.append(row)
+
+    separator = '<tr><td colspan="2"><hr></td></tr>'
+    content = f"\n{separator}\n".join(rows)
+
+    return f"<table>\n{content}\n</table>"
+
+def update_readme(content):
+    try:
+        with open("README.md", "r", encoding="utf-8") as f:
+            readme = f.read()
+    except FileNotFoundError:
+        print("README.md not found.")
+        return
+
+    pattern = r'<!-- GUESTBOOK:START -->.*?<!-- GUESTBOOK:END -->'
+    replacement = f"<!-- GUESTBOOK:START -->\n{content}\n<!-- GUESTBOOK:END -->"
+    updated = re.sub(pattern, replacement, readme, flags=re.DOTALL)
+
+    with open("README.md", "w", encoding="utf-8") as f:
+        f.write(updated)
+
+    print("Guestbook updated.")
+
+def main():
+    issues = fetch_all_closed_issues()
+    print(f"Found {len(issues)} closed issues")
+
+    stats = generate_stats_section(issues)
+    table = generate_guestbook_table(issues)
+    full_content = stats + table
+
+    update_readme(full_content)
+
+if __name__ == "__main__":
+    main()
