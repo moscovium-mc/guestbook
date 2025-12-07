@@ -21,7 +21,7 @@ Sign below.
 ---
 
 > [!NOTE]
-> **Guidelines:** Drop your message, shout out your crew, or just be authentic. Please be respectful. **Entries appear instantly in the guestbook.**
+> **Guidelines:** Drop your message, shout out your crew, just be authentic. Please be respectful. **Entries appear instantly in the guestbook.**
 
 > [!TIP]
 > **Fully Automated:** Issue opened → bot responds → auto-closes → README updates. 
