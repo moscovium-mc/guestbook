@@ -21,10 +21,10 @@ Sign below.
 ---
 
 > [!NOTE]
-> **Guidelines:** Drop your message, shout out your crew, be authentic. No URLs, no spam bots, minimum 10 characters. Keep it real—entries flagged as spam won't appear in the guestbook.
+> **Guidelines:** Drop your message, shout out your crew, or just be authentic. Please be respectful. **Entries will appear in the guestbook.**
 
 > [!TIP]
-> **Fully automated:** Issue opened → bot responds → auto-closes → README updates. Anti-spam filters active—legit entries only.
+> **Fully automated:** Issue opened → bot responds → auto-closes → README updates. 
 
 ---
 
