@@ -1,85 +1,20 @@
 name: Update Guestbook
+
 on:
   issues:
     types: [opened, closed, edited, labeled, unlabeled]
   workflow_dispatch:
+
 permissions:
   contents: write
   issues: write
+
 jobs:
   respond:
     if: github.event.action == 'opened'
     runs-on: ubuntu-latest
     
     steps:
-      - name: Check for spam
-        id: spam_check
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const body = context.payload.issue.body || '';
-            const user = context.payload.issue.user;
-            const accountAge = Date.now() - new Date(user.created_at).getTime();
-            const daysOld = accountAge / (1000 * 60 * 60 * 24);
-            
-            let isSpam = false;
-            let needsReview = false;
-            
-            // Check for URLs
-            const urlPattern = /(https?:\/\/[^\s]+)/gi;
-            if (urlPattern.test(body)) {
-              console.log('Spam detected: Contains URLs');
-              isSpam = true;
-            }
-            
-            // Check minimum length
-            if (body.trim().length < 10) {
-              console.log('Spam detected: Message too short');
-              isSpam = true;
-            }
-            
-            // Check for excessive caps/special chars
-            const capsCount = (body.match(/[A-Z]/g) || []).length;
-            const specialCount = (body.match(/[^a-zA-Z0-9\s]/g) || []).length;
-            const totalChars = body.replace(/\s/g, '').length;
-            
-            if (totalChars > 0) {
-              const capsRatio = capsCount / totalChars;
-              const specialRatio = specialCount / totalChars;
-              
-              if (capsRatio > 0.7 || specialRatio > 0.5) {
-                console.log('Spam detected: Excessive caps or special characters');
-                isSpam = true;
-              }
-            }
-            
-            // Check account age (flag for review, not auto-spam)
-            if (daysOld < 7) {
-              console.log('New account detected: Flagged for review');
-              needsReview = true;
-            }
-            
-            // Apply labels
-            if (isSpam) {
-              await github.rest.issues.addLabels({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                labels: ['spam']
-              });
-            }
-            
-            if (needsReview && !isSpam) {
-              await github.rest.issues.addLabels({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                labels: ['review']
-              });
-            }
-            
-            return { isSpam, needsReview };
-      
       - name: Thank the visitor
         uses: actions/github-script@v7
         with:
@@ -103,15 +38,13 @@ jobs:
               issue_number: context.issue.number,
               body: randomResponse
             });
-      
+
       - name: Standardize issue title
         uses: actions/github-script@v7
         with:
           script: |
-            const currentTitle = context.payload.issue.title;
             const standardTitle = 'Guestbook Entry';
-            
-            if (currentTitle !== standardTitle) {
+            if (context.payload.issue.title !== standardTitle) {
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -119,7 +52,7 @@ jobs:
                 title: standardTitle
               });
             }
-            
+
       - name: Close the issue
         uses: actions/github-script@v7
         with:
@@ -130,7 +63,7 @@ jobs:
               issue_number: context.issue.number,
               state: 'closed'
             });
-  
+
   update:
     if: |
       github.event.action == 'closed' || 
@@ -168,8 +101,6 @@ jobs:
           
           if ! git diff --quiet || ! git diff --staged --quiet; then
             git commit -m "Update guestbook entries [skip ci]"
-            
-            # Retry push up to 3 times if rejected
             for i in 1 2 3; do
               git pull --rebase origin main && git push && break || sleep 2
             done
