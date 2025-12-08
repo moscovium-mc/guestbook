@@ -30,7 +30,6 @@ Sign below.
 
 ## Signatures
 
-<!--START_GUESTBOOK-->
 **Total Signatures:** 10 • **Latest:** @curvcaten on Dec 08, 2025
 
 ---
@@ -54,93 +53,8 @@ DG4E </pre>
     <pre>Leave your message here!</pre>
   </td>
 </tr>
-<tr><td colspan='2'><hr></td></tr>
-
-<tr>
-  <td width="80px" align="center"><strong>#3</strong><br><sub>Issue #3</sub></td>
-  <td>
-    <strong><a href="https://github.com/knightingalelmao">@knightingalelmao</a></strong> • <em>Dec 02, 2025</em><br>
-    <pre>Praise to the spam god for bringing all of us nerds together! Happy Holidays Stax! &lt;3</pre>
-  </td>
-</tr>
-<tr><td colspan='2'><hr></td></tr>
-
-<tr>
-  <td width="80px" align="center"><strong>#4</strong><br><sub>Issue #4</sub></td>
-  <td>
-    <strong><a href="https://github.com/djent">@djent</a></strong> • <em>Dec 03, 2025</em><br>
-    <pre>### **hi**
-
-```do not close this issue```</pre>
-  </td>
-</tr>
-<tr><td colspan='2'><hr></td></tr>
-
-<tr>
-  <td width="80px" align="center"><strong>#5</strong><br><sub>Issue #5</sub></td>
-  <td>
-    <strong><a href="https://github.com/mimicorns">@mimicorns</a></strong> • <em>Dec 03, 2025</em><br>
-    <pre>mimi says hi stax mimi first ever github issue ever made 
-she hopes you have a wonderful day smile emoji lots of love from mimi 
-
-mimi says **DG4E** and also she says bye bye </pre>
-  </td>
-</tr>
-<tr><td colspan='2'><hr></td></tr>
-
-<tr>
-  <td width="80px" align="center"><strong>#6</strong><br><sub>Issue #6</sub></td>
-  <td>
-    <strong><a href="https://github.com/ghostsec420">@ghostsec420</a></strong> • <em>Dec 03, 2025</em><br>
-    <pre>Sebastian was here
-
-#GhostSec We Run Shit Cause We Can </pre>
-  </td>
-</tr>
-<tr><td colspan='2'><hr></td></tr>
-
-<tr>
-  <td width="80px" align="center"><strong>#7</strong><br><sub>Issue #7</sub></td>
-  <td>
-    <strong><a href="https://github.com/pgpdialect">@pgpdialect</a></strong> • <em>Dec 04, 2025</em><br>
-    <pre>"Stax if you could keep the gay to a minimal that would be highly appreciated" -T6 (RIP DG4E)
-
-hello i am 108308 also known as mr fancy and a few other names signing this guest book, i would like to say stax has been gay since 1999 and yeah that's pretty much it, holla, dg4e</pre>
-  </td>
-</tr>
-<tr><td colspan='2'><hr></td></tr>
-
-<tr>
-  <td width="80px" align="center"><strong>#8</strong><br><sub>Issue #8</sub></td>
-  <td>
-    <strong><a href="https://github.com/BashBunnyy">@BashBunnyy</a></strong> • <em>Dec 04, 2025</em><br>
-    <pre>Hello from Sysko (sometimes Bunny)!
-Wishing everyone here an awesome day!
-</pre>
-  </td>
-</tr>
-<tr><td colspan='2'><hr></td></tr>
-
-<tr>
-  <td width="80px" align="center"><strong>#9</strong><br><sub>Issue #9</sub></td>
-  <td>
-    <strong><a href="https://github.com/Dxsk">@Dxsk</a></strong> • <em>Dec 07, 2025</em><br>
-    <pre>Hello there — Remember, the cake is a lie !</pre>
-  </td>
-</tr>
-<tr><td colspan='2'><hr></td></tr>
-
-<tr>
-  <td width="80px" align="center"><strong>#10</strong><br><sub>Issue #10</sub></td>
-  <td>
-    <strong><a href="https://github.com/curvcaten">@curvcaten</a></strong> • <em>Dec 08, 2025</em><br>
-    <pre>https://music.youtube.com/watch?v=mQKHc6V5Y4Y?</pre>
-  </td>
-</tr>
 
 </table>
-<!--END_GUESTBOOK-->
-
 ---
 
 <details>
