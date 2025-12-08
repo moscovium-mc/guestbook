@@ -96,7 +96,6 @@ jobs:
           git add README.md
           if ! git diff --quiet || ! git diff --staged --quiet; then
             git commit -m "Update guestbook entries [skip ci]"
-            # Robust push with retry
             for i in 1 2 3; do 
               git pull --rebase origin main && git push && break || sleep 2
             done
