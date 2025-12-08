@@ -40,17 +40,20 @@ def fetch_all_closed_issues():
 
     return issues
 
-
 def format_date(dt):
     return datetime.strptime(dt, "%Y-%m-%dT%H:%M:%SZ").strftime("%b %d, %Y")
 
+def sanitize(text):
+    if not text:
+        return "(no message)"
 
-def format_body(text):
-    if not text or not text.strip():
-        return "> (no message)"
-
-    return "\n".join(f"> {line}" if line.strip() else "> " for line in text.split("\n"))
-
+    # Escape HTML table-breaking sequences but preserve markdown
+    # <pre> will keep all formatting
+    return (
+        text.replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+    )
 
 def build_stats(issues):
     total = len(issues)
@@ -63,7 +66,6 @@ def build_stats(issues):
 
     return f"**Total Signatures:** {total} • **Latest:** @{user} on {date}\n\n---\n\n"
 
-
 def build_table(issues):
     rows = []
 
@@ -71,8 +73,9 @@ def build_table(issues):
         user = issue.get("user", {}).get("login", "[deleted]")
         url = f"https://github.com/{user}" if user != "[deleted]" else "#"
         date = format_date(issue["created_at"])
-        body = format_body(issue.get("body", ""))
         num = issue["number"]
+        raw_body = issue.get("body", "") or "(no message)"
+        body = sanitize(raw_body)
 
         rows.append(
             f"""
@@ -80,7 +83,7 @@ def build_table(issues):
   <td width="80px" align="center"><strong>#{i}</strong><br><sub>Issue #{num}</sub></td>
   <td>
     <strong><a href="{url}">@{user}</a></strong> • <em>{date}</em><br>
-    {body}
+    <pre>{body}</pre>
   </td>
 </tr>
 """
@@ -89,7 +92,6 @@ def build_table(issues):
     sep = "<tr><td colspan='2'><hr></td></tr>"
 
     return "<table>\n" + f"{sep}\n".join(rows) + "\n</table>"
-
 
 def update_readme(content):
     with open("README.md", "r", encoding="utf-8") as f:
@@ -102,7 +104,6 @@ def update_readme(content):
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(new_readme)
-
 
 def main():
     print("Fetching closed issues...")
@@ -117,7 +118,6 @@ def main():
     print("Updating README...")
     update_readme(full)
     print("Guestbook updated!")
-
 
 if __name__ == "__main__":
     main()
