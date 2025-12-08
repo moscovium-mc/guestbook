@@ -31,9 +31,76 @@ Sign below.
 ## Signatures
 
 <!-- GUESTBOOK:START -->
+### Entry #1 — stanzip
 
-This section will be automatically replaced.
+STANZI wuz HERE
+DG4E
 
+---
+
+### Entry #2 — meany
+
+Leave your message here!
+
+---
+
+### Entry #3 — knightingalelmao
+
+Praise to the spam god for bringing all of us nerds together! Happy Holidays Stax! <3
+
+---
+
+### Entry #4 — djent
+
+### **hi**
+
+```do not close this issue```
+
+---
+
+### Entry #5 — mimicorns
+
+mimi says hi stax mimi first ever github issue ever made 
+she hopes you have a wonderful day smile emoji lots of love from mimi 
+
+mimi says **DG4E** and also she says bye bye
+
+---
+
+### Entry #6 — ghostsec420
+
+Sebastian was here
+
+#GhostSec We Run Shit Cause We Can
+
+---
+
+### Entry #7 — pgpdialect
+
+"Stax if you could keep the gay to a minimal that would be highly appreciated" -T6 (RIP DG4E)
+
+hello i am 108308 also known as mr fancy and a few other names signing this guest book, i would like to say stax has been gay since 1999 and yeah that's pretty much it, holla, dg4e
+
+---
+
+### Entry #8 — BashBunnyy
+
+Hello from Sysko (sometimes Bunny)!
+Wishing everyone here an awesome day!
+
+---
+
+### Entry #9 — Dxsk
+
+Hello there — Remember, the cake is a lie !
+
+---
+
+### Entry #10 — curvcaten
+
+https://music.youtube.com/watch?v=mQKHc6V5Y4Y?
+
+---
 <!-- GUESTBOOK:END -->
 
 ---
