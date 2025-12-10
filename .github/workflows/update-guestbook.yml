@@ -2,7 +2,7 @@ name: Update Guestbook
 
 on:
   issues:
-    types: [opened, closed]
+    types: [opened, closed, edited]
   workflow_dispatch:
 
 permissions:
@@ -11,10 +11,9 @@ permissions:
 
 jobs:
   respond:
-    # Triggered when an issue is opened
     if: github.event.action == 'opened'
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Thank the visitor
         uses: actions/github-script@v7
@@ -30,31 +29,33 @@ jobs:
               `@${context.payload.issue.user.login} dropped by. Legend status confirmed.`,
               `Thanks for the visit, @${context.payload.issue.user.login}! Stay safe out there.`
             ];
-
-            const msg = responses[Math.floor(Math.random() * responses.length)];
-
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: msg
+              body: randomResponse
             });
-
+      
       - name: Standardize issue title
         uses: actions/github-script@v7
         with:
           script: |
-            const standard = "Guestbook Entry";
-            if (context.payload.issue.title !== standard) {
+            const currentTitle = context.payload.issue.title;
+            const standardTitle = 'Guestbook Entry';
+            
+            if (currentTitle !== standardTitle) {
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                title: standard
+                title: standardTitle
               });
             }
-
-      - name: Close issue
+            
+      - name: Close the issue
         uses: actions/github-script@v7
         with:
           script: |
@@ -62,45 +63,43 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              state: "closed"
+              state: 'closed'
             });
 
   update:
-    # Triggered when an issue is closed OR manually dispatched
-    if: github.event.action == 'closed' || github.event_name == 'workflow_dispatch'
+    if: github.event.action == 'closed' || github.event.action == 'edited' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+        
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-
+          python-version: '3.11'
+          
       - name: Install dependencies
         run: pip install requests
-
-      - name: Update README Guestbook
+        
+      - name: Update Guestbook
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
-        # The script must be located in scripts/update_guestbook.py
         run: python scripts/update_guestbook.py
-
+        
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-
           git add README.md
+          
           if ! git diff --quiet || ! git diff --staged --quiet; then
             git commit -m "Update guestbook entries [skip ci]"
-            # Rebase/push loop to handle race conditions
-            for i in 1 2 3; do 
+            
+            for i in 1 2 3; do
               git pull --rebase origin main && git push && break || sleep 2
             done
           fi
